@@ -1,4 +1,4 @@
-# To-do List - Aplicativo para anotações de afazeres do dia a di.
+# To-do List - Aplicativo para anotações de afazeres do dia a dia.
 ## Teste o aplicativo -> https://to-do-list-fcpd0751j-camilodeassis.vercel.app
 
 ### Tecnologias utilizadas:
