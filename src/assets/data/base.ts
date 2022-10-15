@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore/lite';
+import { getFirestore, collection, getDocs, addDoc, doc, deleteDoc } from 'firebase/firestore/lite';
 import { ItemType } from "../../types/itemType";
 
 const firebaseApp = initializeApp({
@@ -31,6 +31,13 @@ const firebaseApp = initializeApp({
             const task = await addDoc(listCollectionRef, {
                 name,
             });
+        },
+
+        delData: async (id: string) => {
+            const db = getFirestore(firebaseApp);
+            const listCollectionRef = collection(db, 'List')
+            const data =  doc(db, 'List', id);
+            await deleteDoc(data);
         }
     }
 

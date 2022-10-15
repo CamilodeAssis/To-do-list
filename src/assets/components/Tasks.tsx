@@ -2,38 +2,41 @@ import React, { useEffect, useState } from "react"
 import { ItemType } from '../../types/itemType'
 import { api } from '../data/base'
 
-export const Tasks = () => {
-  const [listInfo, setListInfo] = useState<ItemType[] | any>();
 
+type Props = {
+  data: ItemType;
+  id: string;
+}
 
-  useEffect(() => {
-    loadList();
-  }, [listInfo]);
+export const Tasks = ({ data, id }: Props) => {
 
-  const loadList = async () => {
-    let data = await api.base();
-    setListInfo(data);
+  const [done, setDone] = useState(false);
+  const [isChecked, setIsChecked] = useState(done);
+
+  const deleData = async () => {
+    if (id){
+      let data = await api.delData(id);
+    }
   }
 
   return (
     <>
+      <div className="flex items-center  justify-center  mb-1 rounded p-2 hover:border-b hover:border-pink-500 bg-gray-300 ">
+        <input
+          className=" w-6 h-6 mr-1 cursor-pointer"
+          type="checkbox"
+          checked={isChecked}
+          onChange={(e) => setIsChecked(e.target.checked)}
+        />
+        <label style={{color: isChecked === true ? '#e01fba' : '#9d9d9e', opacity: isChecked === true ? '30%' : '100%'}} className="text-gray-100 flex-1 " >
+          {data.name}
+        </label>
+        <button
+        onClick={deleData}
+        className="w-24 flex justify-center items-center  bg-pink-500 text-white rounded h-8"
+        >Remove</button>
+      </div>
 
-      {listInfo && listInfo.map((data: any) => (
-        <div className="flex items-center bg-blue-500 my-1 rounded p-2">
-          <input
-            className=" w-6 h-6 mr-1 "
-            type="checkbox"
-            name=""
-            id="" 
-
-          />
-          <label
-          className="text-gray-100"
-           key={data.id}
-           >
-            {data.name}</label>
-        </div>
-      ))}
     </>
   );
 }
